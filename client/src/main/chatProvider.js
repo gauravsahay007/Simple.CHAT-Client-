@@ -9,23 +9,53 @@ const chatProvider=({children})=>{
     const [user,setUser]=useState;
     const [selectedChat,setSelectedChat]=useState;
     const [notification,setNotification]=useState;
-  
+    const getNotification=(userId)=>{
+        
+        var array=[];
+        
+        const {data}=fetch(`${API}/getnotification/${userId}`,{
+            method:"POST",
+            headers:{
+                Authorization: `Bearer ${user.token}` 
+            },
+            body:{
+               array 
+            }
+        });
+        data.notification.forEach((ele)=>{
+            array.push(ele.message);
+        });
+        setNotification(array);
+        if(!user){
+    return;
+        }return {data}
+        .then(res=>{
+            return res.json()
+        })
+        .catch(err=>console.log({
+            title: "Error fetching the Notifications",
+            description: error.message,
+            status: "error",
+            isClosable: true,
+            position: "top",
+        }))
+       };
    const removeNotification=(userId,chatId)=>{
     //need to change from backend
-    const configure={
+   
+    //improve backend route in user router
+    const {data}=fetch(`${API}/deletenotification/${userId}`,
+
+      {
         method:"PUT",
         headers:{
             Authorization: `Bearer ${user.token}` 
         },
-    };
-    //improve backend route in user router
-    const {data}=fetch(`${API}/deletenotification/${userId}`,
-    {
-        userId: user._id,
-        chatId: chatId,
-      },
-    {
-        configure
+        body:{
+            userId: user._id,
+            chatId: chatId,
+            
+          },
     });
     var array=[];
     data.notification.forEach((ele)=>{
@@ -46,7 +76,7 @@ return;
         position: "bottom",
     }))
    };
-   } 
+   
    const sendNotification=(data,userId)=>{
     const recievers=getOtherUsers(user,selectedChat.users);
     
@@ -54,51 +84,23 @@ return;
         //fetching api of send message
         fetch(`${API}/message/send/${userId}`,
         {
-            userId: receiver._id,
-            messageId: data._id,
-            chatId: data.chat._id,
-          },
-        {
             method:"POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`,
+            },
+            body:{
+                userId: receiver._id,
+                messageId: data._id,
+                chatId: data.chat._id,
+              },
         })
     }
    }
 
    useEffect(()=>{
-    const getNotification=(userId)=>{
-        const configure={
-            method:"POST",
-            headers:{
-                Authorization: `Bearer ${user.token}` 
-            },
-        };
-        const {data}=fetch(`${API}/getnotification/${userId}`,{
-            configure
-        });
-        var array=[];
-        data.notification.forEach((ele)=>{
-            array.push(ele.message);
-        });
-        setNotification(array);
-        if(!user){
-    return;
-        }return {data}
-        .then(res=>{
-            return res.json()
-        })
-        .catch(err=>console.log({
-            title: "Error fetching the Notifications",
-            description: error.message,
-            status: "error",
-            isClosable: true,
-            position: "top",
-        }))
-       };
-   },[user, getNotification, setNotification, error.message]);
+    getNotification()
+   },[user]);
    return (
     <ChatContext.Provider
     value={{
@@ -114,7 +116,7 @@ return;
     >
       {children}
     </ChatContext.Provider>
-   )
+   );
 };
 export const ChatState=()=>{
     return useContext(ChatContext);
