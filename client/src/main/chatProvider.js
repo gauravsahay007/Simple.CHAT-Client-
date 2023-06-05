@@ -5,6 +5,7 @@ const chatProvider=({children})=>{
     const [user,setUser]=useState();
     const [notification,setNotification]=useState([]);
     const [error,setError]=useState();
+        
    const getNotification=(userId,token,notification)=>{
     const configure={
         method:"POST",
@@ -28,6 +29,6 @@ return;
     })
     .catch(err=>console.log(err))
    };
-   const 
+  
 }
 export default chatProvider
