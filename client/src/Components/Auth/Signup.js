@@ -48,7 +48,8 @@ export default function Signup() {
         if(!name || !email || !password){
           setShow(true);
         }
-        signup({name,email,password}).then(data => {
+        else{
+          signup({name,email,password}).then(data => {
             setSuccess(true);
             setName("");
             setEmail("");
@@ -56,6 +57,8 @@ export default function Signup() {
             console.log(data);
         }
         )
+        }
+      
       };
 
       const handleClose = event => {
