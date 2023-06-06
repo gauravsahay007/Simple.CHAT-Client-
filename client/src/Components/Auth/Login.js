@@ -2,7 +2,7 @@ import React from 'react'
 import {useState} from "react"
 import { useNavigate, Navigate } from 'react-router-dom';
 import {login} from "./Helper/APIcalls"
-
+import { authenticate } from './Helper/APIcalls';
 // --------------------------------------------------------
 // Material UI
 import Avatar from '@mui/material/Avatar';
@@ -46,12 +46,15 @@ export default function Login() {
           setShow(true);
           
         }
-        else{
+        else{  
             login({email,password}).then(data => {
+              console.log(data);
+               authenticate(data, ()=>{
                 setSuccess(true);
                 setEmail("");
                 setPassword("");
-                console.log(data);
+               })
+                
             }
             )
         }

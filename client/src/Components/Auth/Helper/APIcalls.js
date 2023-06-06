@@ -11,8 +11,8 @@ export const login = (user) => {
         },
         body: JSON.stringify(user)
     })
-    .then(response => {
-        return response.json(user);
+    .then(resp => {
+        return resp.json();
     })
     .catch(err => {return err })
 }
@@ -52,6 +52,7 @@ export const isAuthenticated = () => {
         return false
     }
     if(localStorage.getItem("jwt")){
+        
         return JSON.parse(localStorage.getItem("jwt"));
         
     }
