@@ -20,14 +20,16 @@ export const CreateGroup = (data,users,name) => {
     })
 }
 
-export const SearchUsers = (data,jwt,search) => {
+
+export const SearchUsers = (data,search) => {
     console.log(data.token);
-    return fetch(`${API}/${data.user._id}?search=${search}`,{ 
-        method: "GET",
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`
-    }).then(response=>{
+    return fetch(`${API}/${data.user._id}?search=${search}`,{
+        method:"GET",
+        headers:{
+            Accept: "application/json",
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${data.token}`
+     }   }).then(response=>{
         
         return response.json();
     })
