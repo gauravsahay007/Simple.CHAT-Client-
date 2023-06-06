@@ -4,11 +4,11 @@ import { API } from "../backend";
 import { getOtherUsers } from '../configuration/logic';
 const ChatContext=createContext();
 const chatProvider=({children})=>{
-    const [chat,setChat]=useState;
-    const [error,setError]=useState;
-    const [user,setUser]=useState;
-    const [selectedChat,setSelectedChat]=useState;
-    const [notification,setNotification]=useState;
+    const [chat,setChat]=useState();
+    const [error,setError]=useState();
+    const [user,setUser]=useState();
+    const [selectedChat,setSelectedChat]=useState();
+    const [notification,setNotification]=useState();
     const getNotification=(userId)=>{
         
         var array=[];
