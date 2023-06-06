@@ -4,11 +4,16 @@ import { API } from "../backend";
 import { getOtherUsers } from '../configuration/logic';
 const ChatContext=createContext();
 const chatProvider=({children})=>{
-    const [chat,setChat]=useState;
-    const [error,setError]=useState;
-    const [user,setUser]=useState;
-    const [selectedChat,setSelectedChat]=useState;
-    const [notification,setNotification]=useState;
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [chat,setChat]=useState();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [error,setError]=useState();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [user,setUser]=useState();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [selectedChat,setSelectedChat]=useState([]);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [notification,setNotification]=useState([]);
     const getNotification=(userId)=>{
         
         var array=[];
@@ -40,11 +45,11 @@ const chatProvider=({children})=>{
             position: "top",
         }))
        };
-   const removeNotification=(userId,chatId)=>{
+   const removeNotification=(chatId)=>{
     //need to change from backend
    
     //improve backend route in user router
-    const {data}=fetch(`${API}/deletenotification/${userId}`,
+    const {data}=fetch(`${API}/deletenotification/`,
 
       {
         method:"PUT",
@@ -98,6 +103,7 @@ return;
     }
    }
 
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    useEffect(()=>{
     getNotification()
    },[user]);
