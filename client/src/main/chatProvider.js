@@ -1,14 +1,31 @@
 import { createContext, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { API } from "../backend";
 import { getOtherUsers } from '../configuration/logic';
-const ChatContext=createContext();
-const chatProvider=({children})=>{
+const ChatContext=createContext("");
+const ChatProvider=({children})=>{
+
+    const navigate = useNavigate();
+
     const [chat,setChat]=useState();
     const [error,setError]=useState();
     const [user,setUser]=useState();
     const [selectedChat,setSelectedChat]=useState();
     const [notification,setNotification]=useState();
+
+    useEffect(()=>{
+        const userInfo =JSON.parse(localStorage.getItem("userInfo"));
+        setUser(userInfo);
+
+        
+    },[]);
+
+    console.log(user);
+
+
+
+
     const getNotification=(userId)=>{
         
         var array=[];
@@ -98,9 +115,8 @@ return;
     }
    }
 
-   useEffect(()=>{
-    getNotification()
-   },[user]);
+   
+
    return (
     <ChatContext.Provider
     value={{
@@ -121,4 +137,4 @@ return;
 export const ChatState=()=>{
     return useContext(ChatContext);
 }
-export default chatProvider
+export default ChatProvider
