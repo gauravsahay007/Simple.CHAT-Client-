@@ -49,7 +49,7 @@ export default function CreateGroupChat() {
     const {user,chats, setChats} = ChatState();
  
    
-  
+//   console.log(user);
   
    
    
@@ -71,6 +71,7 @@ const handleSearch = (query) => {
         setLoading(true);
         SearchUsers(user,query).then((response,err)=>{
             setSearchResults(response)
+           
            setInterval(()=>{
             setLoading(false);
            },1000)

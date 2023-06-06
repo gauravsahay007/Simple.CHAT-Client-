@@ -22,7 +22,7 @@ export const CreateGroup = (data,users,name) => {
 
 
 export const SearchUsers = (data,search) => {
-    console.log(data.token);
+    // console.log(data);
     return fetch(`${API}/${data.user._id}?search=${search}`,{
         method:"GET",
         headers:{
