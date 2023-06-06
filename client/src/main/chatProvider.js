@@ -14,18 +14,6 @@ const ChatProvider=({children})=>{
     const [selectedChat,setSelectedChat]=useState();
     const [notification,setNotification]=useState();
 
-    useEffect(()=>{
-        const userInfo =JSON.parse(localStorage.getItem("userInfo"));
-        setUser(userInfo);
-
-        
-    },[]);
-
-    console.log(user);
-
-
-
-
     const getNotification=(userId)=>{
         
         var array=[];
@@ -57,11 +45,11 @@ const ChatProvider=({children})=>{
             position: "top",
         }))
        };
-   const removeNotification=(userId,chatId)=>{
+   const removeNotification=(chatId)=>{
     //need to change from backend
    
     //improve backend route in user router
-    const {data}=fetch(`${API}/deletenotification/${userId}`,
+    const {data}=fetch(`${API}/deletenotification/`,
 
       {
         method:"PUT",
