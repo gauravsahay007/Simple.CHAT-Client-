@@ -4,16 +4,14 @@ import { API } from "../backend";
 import { getOtherUsers } from '../configuration/logic';
 const ChatContext=createContext();
 const chatProvider=({children})=>{
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+
+  
     const [chat,setChat]=useState();
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [error,setError]=useState();
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [user,setUser]=useState();
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [selectedChat,setSelectedChat]=useState([]);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [notification,setNotification]=useState([]);
+    const [selectedChat,setSelectedChat]=useState();
+    const [notification,setNotification]=useState();
+
     const getNotification=(userId)=>{
         
         var array=[];
