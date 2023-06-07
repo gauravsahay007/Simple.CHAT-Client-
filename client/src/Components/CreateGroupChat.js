@@ -127,9 +127,9 @@ const handleDelete=(userToDelete)=>{
       <Button variant="outlined" onClick={handleClickOpen}>
         Create Group <AddIcon sx={{ fontSize: 22, mb : "3px", ml : "5px" }}/>
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
+      <Dialog open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title" >
         <DialogTitle sx={{fontSize: "30px"}}>
-        <Typography variant="h4" align="center">
+        <Typography variant="h5" align="center">
     Create Group Chat
 </Typography>
         </DialogTitle>
@@ -161,9 +161,9 @@ const handleDelete=(userToDelete)=>{
                 </Box>
 
             <Stack direction="row" spacing={10}>  
-                <Button variant='filled'  sx={[{bgcolor:"purple", color:"white", mt:"5px"},{
+                <Button variant='filled'  sx={[{bgcolor:"blue", color:"white", mt:"5px"},{
                                 '&:hover':{
-                                    bgcolor: "#6A1B4D"
+                                    bgcolor: "#2827CC"
                                 }
                             }]
                         } onClick={handleSubmit}>Create Chat</Button>

@@ -17,7 +17,7 @@ const ChatProvider=({children})=>{
     useEffect(()=>{
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
         setUser(userInfo);
-    },[])
+    },[navigate])
 
     const getNotification=(userId)=>{
         
@@ -109,7 +109,7 @@ return;
    }
 
    
-
+   
    return (
     <ChatContext.Provider
     value={{

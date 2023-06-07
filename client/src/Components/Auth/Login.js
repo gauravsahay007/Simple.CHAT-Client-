@@ -19,11 +19,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Snackbar,Alert } from '@mui/material';
-
+import { ChatState } from '../../main/chatProvider';
 // --------------------------------------------------------
 export default function Login() {
     const [show, setShow] = useState(false);
-   
+    const { setUser } = ChatState();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [success, setSuccess] = useState(false);
@@ -48,12 +48,10 @@ export default function Login() {
         }
         else{  
             login({email,password}).then(data => {
-              console.log(data);
-               authenticate(data, ()=>{
-                setSuccess(true);
-                setEmail("");
-                setPassword("");
-               })
+              
+              localStorage.setItem("userInfo", JSON.stringify(data));
+              setUser(data);
+              
                 
             }
             )
