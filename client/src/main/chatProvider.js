@@ -14,6 +14,11 @@ const ChatProvider=({children})=>{
     const [selectedChat,setSelectedChat]=useState();
     const [notification,setNotification]=useState();
 
+    useEffect(()=>{
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        setUser(userInfo);
+    },[navigate])
+
     const getNotification=(userId)=>{
         
         var array=[];
@@ -104,7 +109,7 @@ return;
    }
 
    
-
+   
    return (
     <ChatContext.Provider
     value={{
