@@ -51,8 +51,7 @@ export default function Login() {
               
               localStorage.setItem("userInfo", JSON.stringify(data));
               setUser(data);
-              
-                
+              console.log(data.user);  
             }
             )
         }
