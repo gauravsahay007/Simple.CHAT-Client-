@@ -17,12 +17,13 @@ const ProfileModal = ({ children, size }) => {
     const handleClose = () => {
       setOpen(false);
     };
+
     const user = JSON.parse(localStorage.getItem("userInfo"))
 
-   const onOpen=true;
-   const isOpen=true;
-   const onClose=true;
-   const isClose=true;
+
+    console.log(user.user);
+
+  
     return(
         <>
         {children ? (
@@ -35,19 +36,19 @@ const ProfileModal = ({ children, size }) => {
                 onClick={handleClickOpen}
             >
             <Avatar
-            size={size} cursor='pointer' alt={user.name} src={user.pic}
+            size={size} cursor='pointer' alt={user.name} src={user.user.pic}
             />
             </IconButton>
         )}
         {
 
-         <Dialog open={open} onClose={onClose} maxWidth="lg">
+         <Dialog open={open}  maxWidth="lg">
             <DialogTitle sx={{fontSize: 40, fontFamily: 'QuickSand', textAlign: 'center'}}>Welcome {user.user.name}</DialogTitle>
             <DialogContent>
                 <Box textAlign="center">
 
-                <Avatar  sx={{  width: 90, height: 90, m:"auto", mb:"20px" }} src={user.pic}/>
-                
+                <Avatar  sx={{  width: 90, height: 90, m:"auto", mb:"20px" }} src={user.user.pic}/>
+
                 </Box>
                 <Typography align="center">
                     Email: {user.user.email}
