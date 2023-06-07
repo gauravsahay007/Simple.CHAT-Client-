@@ -6,7 +6,8 @@ import ChatProvider from './main/chatProvider'
 import Signup from './Components/Auth/Signup'
 import Login from './Components/Auth/Login'
 import Mychats from './Components/Mychats'
-import Profile from './test'
+
+import Test from './test'
 // --------------------------------------------
 export default function Router() {
   
@@ -18,7 +19,7 @@ export default function Router() {
         <Route path='/signup' exact element={<Signup/>} />
         <Route path='/login' exact element={<Login/>} />
         <Route path='/chats' exact element={<Mychats/>} />
-        <Route path='/profile' exact element={<Profile/>}/>
+        <Route path='/test' exact element={<Test/>}/>
     </Routes>
     </ChatProvider>
     </BrowserRouter>

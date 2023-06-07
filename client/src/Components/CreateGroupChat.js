@@ -25,13 +25,15 @@ export default function CreateGroupChat() {
 // ----------------------------------------------
 // dialog box
   const [open, setOpen] = React.useState(false);
-
+  const [error,setError]=useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    
+    
   };
 //   -----------------------------------------------------
 
@@ -44,10 +46,10 @@ export default function CreateGroupChat() {
    const [search, setSearch] = useState();
    const [searchResults, setSearchResults] = useState([]);
    const [loading, setLoading] = useState(false);
-
+const [success,setSuccess]=useState(false);
    const jwt=isAuthenticated();
-    const {user,chats, setChats} = ChatState();
- 
+   const user = JSON.parse(localStorage.getItem("userInfo"))
+ console.log(user);
    
 //   console.log(user);
   
@@ -71,7 +73,7 @@ const handleSearch = (query) => {
         setLoading(true);
         SearchUsers(user,query).then((response,err)=>{
             setSearchResults(response)
-           
+          setSuccess(false);
            setInterval(()=>{
             setLoading(false);
            },1000)
@@ -91,7 +93,7 @@ const handleSubmit = () =>{
     try{
         CreateGroup(user,selectedUsers,groupChatName).then((response,err)=>{
             console.log(response);
-            
+            setSuccess(true);
         })
     }
     catch(err){
@@ -132,6 +134,11 @@ const handleDelete=(userToDelete)=>{
         <Typography variant="h5" align="center">
     Create Group Chat
 </Typography>
+        <Snackbar open={success} autoHideDuration={4000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" variant='filled' sx={{ width: '100%' }}>
+          Chat Created Successfully 🥳!!
+        </Alert>
+      </Snackbar>
         </DialogTitle>
         <DialogContent>
          
