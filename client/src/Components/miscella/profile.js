@@ -19,7 +19,7 @@ const ProfileModal = ({ children, size }) => {
     };
 
     const user = JSON.parse(localStorage.getItem("userInfo"))
-    
+
 
     console.log(user.user);
 
@@ -36,7 +36,7 @@ const ProfileModal = ({ children, size }) => {
                 onClick={handleClickOpen}
             >
             <Avatar
-            size={size} cursor='pointer' alt={user.name} src={user.pic}
+            size={size} cursor='pointer' alt={user.name} src={user.user.pic}
             />
             </IconButton>
         )}
@@ -47,7 +47,7 @@ const ProfileModal = ({ children, size }) => {
             <DialogContent>
                 <Box textAlign="center">
 
-                <Avatar  sx={{  width: 90, height: 90, m:"auto", mb:"20px" }} src={user.pic}/>
+                <Avatar  sx={{  width: 90, height: 90, m:"auto", mb:"20px" }} src={user.user.pic}/>
 
                 </Box>
                 <Typography align="center">
