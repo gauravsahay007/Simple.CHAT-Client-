@@ -1,10 +1,13 @@
 import React from "react";
-import ProfileModal from "./Components/Modals/profile";
-export default function Profile(){
+import ProfileModal from "./Components/miscella/profile";
+import SideBar from "./Components/miscella/SideBar";
+export default function Test(){
+    
 
         return (
             <div> 
-                <ProfileModal/>
+                <SideBar/>
+                {/* <ProfileModal/> */}
             </div>
           )
   

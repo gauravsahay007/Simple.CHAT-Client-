@@ -49,10 +49,11 @@ export default function Login() {
         else{  
             login({email,password}).then(data => {
               setSuccess(true);
-
               localStorage.setItem("userInfo", JSON.stringify(data));
               
               setUser(data);
+              console.log(data);
+                
               console.log(data.user);  
             }
             )
