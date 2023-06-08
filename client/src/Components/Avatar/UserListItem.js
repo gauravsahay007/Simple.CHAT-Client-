@@ -5,7 +5,8 @@ export default function UserListItem({user, handleFunction}) {
   return (
     <Box onClick={handleFunction} sx={[{bgcolor:"#E8E8E8",mt:"5px",mb:"5px",borderRadius:1 , p:"5px", display:"flex" , gap:"20px",cursor:"pointer"},{
         '&:hover':{
-            bgcolor:"#2827CC"
+            bgcolor:"#2827CC",
+            color:"white"
         }
     }]}>
         <Avatar sx={{  width: 38, height: 38, border:"1px solid black" }} src={user.pic}/>
@@ -13,7 +14,7 @@ export default function UserListItem({user, handleFunction}) {
         <Typography>{user.name}</Typography>
         <Typography  >{user.email}</Typography>
     </Box>
-      
+   
     </Box>
   )
 }
