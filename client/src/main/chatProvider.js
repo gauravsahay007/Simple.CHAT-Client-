@@ -15,13 +15,7 @@ const ChatProvider=({children})=>{
     const [user,setUser]=useState(JSON.parse(localStorage.getItem("userInfo")));
     const [selectedChat,setSelectedChat]=useState();
     const [notification,setNotification]=useState();
-  
 
-   
-
-    
-
-   
 
     const getNotification=(userId)=>{
         

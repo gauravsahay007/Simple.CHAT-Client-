@@ -1,261 +1,148 @@
-import React,{useState} from "react";
-import { API } from "../../backend";
-import {
-    Drawer,
-    Divider,
-    IconButton,
-    Box ,
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { Grid, Typography,TextField, Stack, CircularProgress } from '@mui/material';
+import Box from '@mui/material/Box';
+import SearchIcon from '@mui/icons-material/Search';
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import { SearchUsers } from '../Helper';
+import { ChatState } from '../../main/chatProvider';
+import UserListItem from '../Avatar/UserListItem';
+import UserBadgeItem from '../Avatar/UserBadgeItem';
+export default function SideBar() {
+  const [state, setState] = React.useState({
     
-     
-   InputBase,
-    ListItem,
+    left: false,
     
-    Button,
-    Typography,
-    CircularProgress,
-    Tooltip,
-    Menu,
-    MenuItem,
-    MenuList,
-   
-   
-    
-} from '@mui/material';
-import {Alert} from "@mui/material";
-import {Avatar} from "@mui/material";
-import {Snackbar} from "@mui/material";
-import { ChatState } from "../../main/chatProvider";
-import { Notifications ,Effect, ExpandMore} from "@mui/icons-material";
-import { Badge } from "@mui/icons-material";
-import ProfileModal from "./profile";
-import { Search } from "@mui/icons-material";
-import ChatLoading from "../chatloading";
-import { getOtherUsers } from "../../configuration/logic";
-import { useNavigate } from 'react-router-dom';
-export default function SideBar(){
-    const [open, setOpen] = React.useState(false);
-    
-   const isOpen=true;
-   const onClose=true;
-  const onOpen=true;
-  
-  const [error,setError]=useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  });
+  const [fetch, setFetch] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [user, setUser] = useState();
+  const [ open ,setOpen] = useState(false);
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setUser(JSON.parse(localStorage.getItem("userInfo")));
+    setTimeout(()=>{
+      setOpen(!open);
+    },300)
+
+    setState({ ...state, [anchor]: open });
   };
 
   const handleClose = () => {
     setOpen(false);
-    
-    
   };
+  
+  useEffect(()=>{
+    setTimeout(()=>{
+      setLoading(false);
+    },1000)
+  },[fetch])
 
-//    ............states........//
-   const [search,setSearch]=useState();
-   const [loading,setLoading]=useState();
-   const [searchResult,setSearchResult]=useState([]);
-   const [loadingChat,setLoadingChat]=useState();
-   //Use of chatstate
-   const {
-    user,
-    setSelectedChat,
-    chats,
-    setChats,
-    notification,
-    setNotification,
-    IconButton,
-    removeNotification,
-  } = ChatState();
-  const navigate=useNavigate();
+  const handleSearch = (query) => {
+    setSearch(query); 
+    if(!query){
+        return;
+    } 
 
-
-   const handleSearch=()=>{
-    //doubt
+    try{
+        setLoading(true)
+        SearchUsers(user,query).then((response,err)=>{
+          setSearchResults(response)
+           setFetch(!fetch);
     
-        if(!search){
-            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} onClose={handleClose} autoHideDuration={5000}>
-        <Alert  severity="error" variant='filled' sx={{ width: '100%' }}>
-        Search Bar is Empty
-        </Alert>
-      </Snackbar>
-            return;
-        }
-        try{
-            setLoading(true);
-            const {data}=fetch(`${API}/${user._id}?search=${search}`,
-            
-        {method:"GET",
-            headers:{
-            Authorization: `Bearer ${user.token}`,
-        }}
-    )
-    setLoading(false);
-    setSearchResult(data);
-        }
-        catch(error){
-            setLoading(false);
-            <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} open={open} onClose={handleClose} autoHideDuration={5000}>
-        <Alert  severity="error" variant='filled' sx={{ width: '100%' }}>
-        Failed to Load the Search Results
-        </Alert>
-      </Snackbar>
-        }
+        })
+    }catch(err){
         
-   }
-   const accessChat=(userId)=>{
-       try{
-        setLoadingChat(true);
-        const {data}=fetch(`${API}/chat`,
-        {userId},
-        {
-            method:"POST",
-            headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${user.token}`,
-              },
-        }
-        )
-        if(!chats.find((chat)=>chat._id===data._id))setChats([data,...chats]);
-        setSelectedChat(data);
-        setLoadingChat(false);
-        onClose();
-       }
-       catch{
-          setLoadingChat(false);
-          <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} open={open} onClose={handleClose} autoHideDuration={5000}>
-        <Alert  severity="error" variant='filled' sx={{ width: '100%' }}>
-        "Error fetchind the Chat", ${error.message}
-        </Alert>
-      </Snackbar>
-       }
-   }
-   //handling the logout functionality
-   //
-   const LogoutHandler=()=>{
-    //line clears the notification array by setting it to an empty array, effectively removing any pending notifications.
-    setNotification([]);
-    //This line removes the "userInfo" item from the browser's local storage. This is typically used to clear any stored user information or authentication tokens upon logout.
-    localStorage.removeItem("userInfo");
-    // This line clears the selected chat by setting it to undefined or null. It ensures that no chat is selected after the user logs out.
-    setSelectedChat();
-    //This line clears the selected chat by setting it to undefined or null. It ensures that no chat is selected after the user logs out.
-    navigate("/login");
-   };
+        console.log(err);
+        return;
+    }
+} 
+
+  const Search = () =>  {
     return (
-        <>
-           <Box
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-      bgcolor="white"
-      width="100%"
-      padding="5px 10px"
-      border="5px solid"
-    >
-    <Tooltip title="Search friends to talk..." arrow placement="bottom-end" >
-        <Button variant="outlined" onClick={onOpen}>
-          <Search/>
-          <span style={{display:'none',flex:1,paddingLeft:4}}>
-            Find Friend
-          </span>
-          </Button>
-    </Tooltip>
-    <Typography variant="h3" fontFamily="Quicksand" color="black">
-      SociSnap
-    </Typography>
-
-    <div style={{ display: 'flex', alignContent: 'center' }}>
-    <Menu>
-        <IconButton>
-          <Badge badgeContent={notification?.length || 0} color="error">
-            <Notifications />
-          </Badge>
-        </IconButton>
-        <MenuList pl={5} pr={5}>
-          {notification?.length ? (
-            notification.map((notif) => (
-              <React.Fragment key={notif._id}>
-                <MenuItem
-                  onClick={() => {
-                    setSelectedChat(notif.chat);
-                    removeNotification(notif.chat._id);
-                  }}
-                  sx={{ display: 'contents' }}
-                >
-                  <Box fontWeight="semibold">
-                    {notif.chat.isGroupChat
-                      ? `New Message in ${notif.chat.chatName}`
-                      : `New Message from ${getOtherUsers(user, notif.chat.users).name}`}
-                  </Box>
-                  <div>{notif.content}</div>
-                </MenuItem>
-                <Divider />
-              </React.Fragment>
-            ))
-          ) : (
-            <MenuItem>
-              <Typography>No New Messages</Typography>
-            </MenuItem>
-          )}
-        </MenuList>
-      </Menu>
+      <Grid item xs={12} sx={{ml:"5px",mb:"10px" , mt: "1px"}}>
+      <TextField  
+        size='small'
+        id="group name"
+        label="Search by name or email  "
+        sx={{color:"blue"}}
+        onChange={(e)=>{handleSearch(e.target.value)}} 
       
-      <Menu>
-        <IconButton p={1} as={Button} rightIcon={<ExpandMore/>} backgroundColor="inherit">
-        <Avatar size= "small" 
-        cursor= "pointer"
-         alt= {user?.name || 'User'}
-         src={user?.pic}/>
-        </IconButton>
-        <MenuList>
-            <ProfileModal user={user} size="small">
-               <Typography>My Profiles</Typography>
-            </ProfileModal>
-            <Divider/>
-            <MenuItem onClick={()=>LogoutHandler()}>LogOut</MenuItem>
-        </MenuList>
-      </Menu>
-    </div>
-    </Box>
+      />
+      <Button variant='contained' sx={{ml:"4px",mt:"2px", bgcolor:"blue", mr:"5px"}} onClick={()=>{handleSearch(search)}} >Search</Button>
+
+      <Stack direction="row" spacing={10}>  
+               
+    {loading? (
+        <div> <CircularProgress   size="25px" sx={{mt:"12px"}}/></div>
+                   
+                  ):( <div></div> )} 
+                    
+            </Stack> 
+
+            {loading? (
+        <div> </div> 
+                  ):(
+                    searchResults
+                    ?.slice(0, 4)
+                    .map((user) => (
+                      <Box sx={{mr:"10px"}}>
+                        <UserListItem key={user._id} user={user} handleFunction={()=>{}}/>
+                      </Box>
+                      
+                     
+                    )))}
+      
 
 
-
-
-
-
-        <div>
-           Search User
-           <Drawer anchor="left" onClose={onClose} isOpen={isOpen}>
-           <Typography borderBottomWidth={"1px"}>Search Users</Typography>
-            <Box display={"flex"} pb={2}>
-              <InputBase
-                placeholder="Search by name or email"
-                mr={2}
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-              />
-              <Button onClick={()=>handleSearch()}>Go</Button>
-            </Box>
-{/* if it is loading then calling  chatloading function which will call for */}
-{/* renders a Stack component with a single Skeleton component inside. The Skeleton component is used as a loading placeholder, */}
-            {loading ? (<ChatLoading/>):(
-// if loading value gets false then it will start mapping on array obtained by useState searchResult 
-//map() function will iterate over every user and return the result 
-//based on the callback function i.e accesschat() and store it in array
-                searchResult?.map((user)=>(
-                    <ListItem
-                    key={user._id}
-                    user={user}
-                    handleFunction={()=>accessChat(user._id)}
-                    />
-                ))
-            )}
-{/* loadingChat is likely a boolean variable that indicates whether a loading state is active or not. */}
-            {loadingChat && <CircularProgress sx={{ marginLeft: 'auto', display: 'flex' }}/> }
-             <Divider/>
-            
-           </Drawer>
-        </div>
-        </>
+    </Grid>
     )
+  }
+
+
+
+
+
+
+
+  return (
+    <div>
+
+      
+    
+      <React.Fragment >
+        <Button onClick={toggleDrawer()}><SearchIcon/></Button>
+        {open? (  <Drawer
+  
+          open={open}
+         onClose={handleClose} 
+
+         
+        >
+          <Typography align='center' sx={{mr:"10px",mt:"5px", fontSize:"1.5rem",color:"blue"}}> Search Users </Typography>
+          <Box sx={{border:"1px solid blue",mb:"5px"}}></Box>
+          {Search()}
+        </Drawer>):(<></>)}
+      
+      </React.Fragment>
+  
+  </div>
+  )
 }
+
+
