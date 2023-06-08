@@ -89,7 +89,7 @@ export default function SideBar() {
       <Stack direction="row" spacing={10}>  
                
     {loading? (
-        <div> <CircularProgress color="blue"  size="25px" sx={{mt:"12px"}}/></div>
+        <div> <CircularProgress   size="25px" sx={{mt:"12px"}}/></div>
                    
                   ):( <div></div> )} 
                     
