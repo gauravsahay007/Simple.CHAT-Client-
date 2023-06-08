@@ -128,8 +128,7 @@ export default function SideBar(){
         </Alert>
       </Snackbar>
        }
-   }
-   //handling the logout functionality
+   }   //handling the logout functionality
    //
    const LogoutHandler=()=>{
     //line clears the notification array by setting it to an empty array, effectively removing any pending notifications.
