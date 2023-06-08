@@ -212,7 +212,7 @@ export default function SideBar(){
                <Typography>My Profiles</Typography>
             </ProfileModal>
             <Divider/>
-            <MenuItem onClick={LogoutHandler}>LogOut</MenuItem>
+            <MenuItem onClick={()=>LogoutHandler()}>LogOut</MenuItem>
         </MenuList>
       </Menu>
     </div>
@@ -234,7 +234,7 @@ export default function SideBar(){
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
               />
-              <Button onClick={handleSearch}>Go</Button>
+              <Button onClick={()=>handleSearch()}>Go</Button>
             </Box>
 {/* if it is loading then calling  chatloading function which will call for */}
 {/* renders a Stack component with a single Skeleton component inside. The Skeleton component is used as a loading placeholder, */}
