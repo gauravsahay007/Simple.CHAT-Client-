@@ -1,7 +1,7 @@
 import { API } from "../backend";
 
 export const CreateGroup = (data,users,name) => {
-    return fetch(`${API}/create/groupChat`,{
+    return fetch(`${API}/create/groupChat/${data.user._id}`,{
         method:"POST",
         headers:{
             Accept: "application/json",
@@ -32,5 +32,63 @@ export const SearchUsers = (data,search) => {
      }   }).then(response=>{
         
         return response.json();
+    })
+}
+
+export const FetchChats = (data) => {
+   return (data?(fetch(`${API}/fetch/chats/${data.user._id}`,{
+    method:"GET",
+    headers:{
+        Accept: "application/json",
+        "Content-Type":"application/json",
+        Authorization: `Bearer ${data.token}`
+ } }).then((response)=>{
+    return response.json();
+ })):( null))
+}
+
+export const RenameGroup = (data, chatName, chatId) =>{
+    return fetch(`${API}/rename/group`,{
+        method:"PUT",
+    headers:{
+        Accept: "application/json",
+        "Content-Type":"application/json",
+        Authorization: `Bearer ${data.token}`
+ } ,
+ body:JSON.stringify(
+   
+    {chatName,chatId}
+ )
+    })
+}
+
+export const Kickout = (data, chatId, userId) => {
+   
+    return fetch(`${API}/kickOut`,{
+        method:"PUT",
+    headers:{
+        Accept: "application/json",
+        "Content-Type":"application/json",
+        Authorization: `Bearer ${data.token}`
+ } ,
+ body:JSON.stringify({ 
+    "userId" : userId,
+    "chatId" : chatId
+ })
+    })
+}
+
+export const AddToGroup = (data,chatId,userId) => {
+    return fetch(`${API}/addto/group`,{
+        method:"PUT",
+    headers:{
+        Accept: "application/json",
+        "Content-Type":"application/json",
+        Authorization: `Bearer ${data.token}`
+ } ,
+ body:JSON.stringify(
+   
+    {chatId,userId}
+ )
     })
 }

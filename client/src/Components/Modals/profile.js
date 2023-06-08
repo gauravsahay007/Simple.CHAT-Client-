@@ -18,10 +18,11 @@ const ProfileModal = ({ children, size }) => {
       setOpen(false);
     };
 
-    const user = JSON.parse(localStorage.getItem("userInfo"))
+    // console.log(ChatState());
+    const user =  JSON.parse(localStorage.getItem("userInfo"))
 
 
-    console.log(user.user);
+  
 
   
     return(
