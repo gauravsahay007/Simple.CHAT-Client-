@@ -7,7 +7,7 @@ export default function Test(){
         return (
             <div> 
                 <SideBar/>
-                {/* <ProfileModal/> */}
+                
             </div>
           )
   
