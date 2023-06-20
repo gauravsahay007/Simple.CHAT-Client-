@@ -1,5 +1,5 @@
 import { API } from "../backend";
-
+import { useNavigate } from "react-router-dom";
 export const CreateGroup = (data,users,name) => {
     return fetch(`${API}/create/groupChat/${data.user._id}`,{
         method:"POST",
@@ -106,6 +106,7 @@ export const FetchMessages = (data, user) => {
 
 
 export const RemoveNotification = (chatId,data) => {
+    
     const userId = data.user._id;
     return fetch(`${API}/deletenotification`,{
         method: "PUT",
@@ -175,3 +176,4 @@ export const SendNotification = (user,data) =>{
         return response.json();
      })
 }
+

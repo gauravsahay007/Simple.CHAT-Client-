@@ -185,9 +185,7 @@ const sx = {
             <Stack direction="row" spacing={10}>  
                 <Button variant='filled'  sx={[{bgcolor:"#2C3E50", color:"white", mt:"5px"},{
                                 '&:hover':{
-                                    bgcolor: "white",
-                                    color:"#2C3E50",
-                                    border:"1px solid #2C3E50"
+                                  bgcolor:"#2C3E50", color:"white"
                                 }
                             }]
                         } onClick={handleSubmit}>Create Chat</Button>

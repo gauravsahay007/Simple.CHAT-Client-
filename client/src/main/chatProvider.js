@@ -42,7 +42,7 @@ const ChatProvider=({children})=>{
                 notificationArray.push(element.message);
             })
             setNotification(notificationArray)
-        })
+        })      
     }
     catch(err){
         console.log(err);

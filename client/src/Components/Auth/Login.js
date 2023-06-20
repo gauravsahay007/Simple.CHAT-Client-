@@ -20,6 +20,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Snackbar,Alert } from '@mui/material';
 import { ChatState } from '../../main/chatProvider';
+
 // --------------------------------------------------------
 export default function Login() {
     const [show, setShow] = useState(false);
@@ -48,13 +49,21 @@ export default function Login() {
         }
         else{  
             login({email,password}).then(data => {
-              setSuccess(true);
-              localStorage.setItem("userInfo", JSON.stringify(data));
               
-              setUser(data);
-              console.log(data);
-                
-              console.log(data.user);  
+              
+              const user =   data;
+              // console.log(user);
+
+              if(user.token){
+                localStorage.setItem("userInfo", JSON.stringify(data));
+                setUser(data);
+                setSuccess(true);
+                navigate("/chats");
+              }
+              
+            
+              
+  
             }
             )
         }
