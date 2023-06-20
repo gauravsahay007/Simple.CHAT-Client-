@@ -20,10 +20,10 @@ import { AddToGroup, FetchChats, Kickout, RenameGroup, SearchUsers } from '../He
 // ------------------------------------
 
 
-export default function UpdateGroupChat({fetchAgain, setFetchAgain, fetchMessages}) {
+export default function UpdateGroupChat({fetchAgain, setFetchAgain, fetchMessages, selectedChat, setSelectedChat}) {
   const [open, setOpen] = React.useState(false);
-  const [selectedChat, setSelectedChat] = useState();
-   const [fetch, setFetch] = useState(false);
+ 
+  // console.log(selectedChat);
    const [members, setMembers] = useState([]);
    const {user} =    ChatState();
   const [success, setSuccess] = useState(false);
@@ -32,15 +32,14 @@ export default function UpdateGroupChat({fetchAgain, setFetchAgain, fetchMessage
 //  console.log(user);
   const handleClickOpen = () => {
     if(user)  FetchChats(user).then(response=>{
-        setSelectedChat(response[0]);
         if(!selectedChat) setOpen(false);
         
         else{
-          setTimeout(()=>{
+         
             setMembers(selectedChat.users)
             setChatName(selectedChat.chatName)
             setOpen(true);
-          },300)
+      
         }
        
        
@@ -53,6 +52,7 @@ export default function UpdateGroupChat({fetchAgain, setFetchAgain, fetchMessage
   
 
   const handleClose = () => {
+    setFetchAgain(!fetchAgain);
     setOpen(false);
   };
 
@@ -62,7 +62,7 @@ export default function UpdateGroupChat({fetchAgain, setFetchAgain, fetchMessage
 // ---------------------------------------------
 // STATES
   const [loading, setLoading] = useState(false);
-  const [groupChatName, setGroupChatName] = useState();
+  const [groupChatName, setGroupChatName] = useState("");
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [renameLoading, setRenameLoading] = useState(false);
@@ -73,31 +73,44 @@ export default function UpdateGroupChat({fetchAgain, setFetchAgain, fetchMessage
 
 // ----------------------------------------------
 // Handle functions
-  const handleRemove = (userToRemove) =>{
-        try{
-          setLoading(true);
-          Kickout(user,selectedChat._id,userToRemove._id).then(response=>{
-           setLoading(false);
-           setSuccessDel(true);
-           setMembers(members.filter(u=>u._id!=userToRemove._id));
-          })
-         }
-        
-        catch{
-          setLoading(false);
-        }
-  }
-
+const handleRemove = (userToRemove) => {
+  return () => {
+    try {
+      setLoading(true);
+      Kickout(user, selectedChat._id, userToRemove._id)
+        .then((response) => {
+          console.log(response);
+          // setSelectedChat(response);
+         
+            setFetchAgain(!fetchAgain)
+            setLoading(false);
+            setSuccessDel(true);
+            setMembers(members.filter((u) => u._id !== userToRemove._id));
+          
+          
+        });
+    } catch {
+      setLoading(false);
+    }
+  };
+};
   
 
   const handleRename = () =>{
     if(!groupChatName) return ;
     try{
       setRenameLoading(true);
+      
       RenameGroup(user, groupChatName , selectedChat._id).then(response=>{
+      //  console.log(response);
+      setSelectedChat(response);
+       setGroupChatName(response.chatName)
+       setTimeout(()=>{
         setRenameLoading(false);
-        setSelectedChat(response);
+        setFetchAgain(!fetchAgain)
         setChatName(groupChatName);
+       },200)
+       
         // setFetchAgain(!fetchAgain);
       })
     }
@@ -114,6 +127,7 @@ export default function UpdateGroupChat({fetchAgain, setFetchAgain, fetchMessage
   }
 
   const handleSearch = (query) => {
+    
     setSearch(query); 
     if(!query){
         return;
@@ -122,22 +136,18 @@ export default function UpdateGroupChat({fetchAgain, setFetchAgain, fetchMessage
     try{
         setLoading(true)
         SearchUsers(user,query).then((response,err)=>{
-          setSearchResults(response)
-           setFetch(!fetch);
+          
+          setSearchResults(response);
+          setTimeout(()=>{
+            setLoading(false);
+          },500)
     
         })
     }catch(err){
-        
         console.log(err);
         return;
     }
 } 
-
-useEffect(()=>{
-  setTimeout(()=>{
-    setLoading(false);
-  },1000)
-},[fetch])
 
 
 
@@ -161,7 +171,8 @@ const handleAddUser = (userToAdd) => {
     setLoading(true);
    
 AddToGroup(user,selectedChat._id,userToAdd._id).then(response=>{
- setFetch(!fetch)
+  setLoading(false)
+  setFetchAgain(!fetchAgain)
  setSuccess(true);
   setMembers([...members,response]);
 console.log(members);
@@ -170,7 +181,7 @@ console.log(members);
 })
   }
   catch(err){
-    setFetch(false);
+  
       <Snackbar open={true} autoHideDuration={4000}>
       <Alert onClose={handleClose} severity="error" variant='filled' sx={{ width: '100%' }}>
        Error Occured!
@@ -180,30 +191,26 @@ console.log(members);
 
 }
 
-const Array = () =>{
-  return (members.map((u)=>(
-    <>
-    <Snackbar open={success} autoHideDuration={2000}onClose={()=>{
-      setSuccess(false);
-    }} >
-      <Alert onClose={handleClose} severity="success" variant='filled' sx={{ width: '100%' }}>
-       User Added!!
-      </Alert>
-    </Snackbar>
-    <UserBadgeItem key={u._id} user={u} handlerfunction={()=>{handleRemove(u)}}/>
-    </>
-   
-)))
-}
-
-
-
+const Array = () => {
+  return members.map((u) => (
+    <React.Fragment key={u._id}>
+      <Snackbar
+        open={success}
+        autoHideDuration={2000}
+        onClose={() => {
+          setSuccess(false);
+        }}
+      >
+        <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+          User Added!!
+        </Alert>
+      </Snackbar>
+      <UserBadgeItem key={u._id} user={u} handlerfunction={handleRemove(u)} />
+    </React.Fragment>
+  ));
+};
 
 // ----------------------------------------------
-  
-
-
-  
 
 return (
   <>
@@ -215,17 +222,23 @@ return (
       </Alert>
     </Snackbar>
 
-  <IconButton onClick={handleClickOpen} sx={{borderRadius:"4px",m:"4px"}}>
-  <RemoveRedEyeRoundedIcon sx={{color:"blue",m:"5px"}}   />
+    <Stack direction="row" >
+    <IconButton onClick={handleClickOpen} sx={[{borderRadius:"4px",m:"4px",bgcolor:"#32465A",color:"white"},{
+      '&:hover':{
+        bgcolor:"#F0EEED",
+        color:"#32465A"
+      }
+    }]}>
+  <RemoveRedEyeRoundedIcon sx={{m:"4px"}}   />
   </IconButton>
 
   {open? (
        <Dialog open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title" >
-       <DialogTitle sx={{fontSize: "30px"}}>
-       <Typography variant="h5" align="center">
-   {chatName}
- </Typography>
-       </DialogTitle>
+     <DialogTitle>
+  <Typography align="center">
+    {chatName}
+  </Typography>
+</DialogTitle>
        <DialogContent>
  
        <Box sx={{display:"flex", fontSize:"10px", gap:"5px"}}>
@@ -242,7 +255,11 @@ return (
                } }
                
                />
-               <Button variant='contained' sx={{ml:"4px",mt:"2px", bgcolor:"blue"}} onClick={handleRename} >Update</Button>
+               <Button variant='contained' sx={[{ml:"4px",mt:"2px", bgcolor:"#00A884"},{
+                "&:hover":{
+                  bgcolor:"#00A884"
+                }
+               }]} onClick={handleRename} >Update</Button>
              </Grid>
              <Grid item xs={12} sx={{mb:"10px" , mt: "10px"}}>
                <TextField
@@ -258,9 +275,9 @@ return (
            
               
                <Stack direction="row" spacing={15}>
-               <Button variant='contained' onClick={handleRemove(user)} sx={[{ml:"4px",mt:"2px", bgcolor:"red"},{
+               <Button variant='contained' onClick={handleRemove(user)} sx={[{ml:"4px",mt:"2px", bgcolor:"#D82E2F"},{
                '&:hover':{
-                 bgcolor:"#C53030"
+                 bgcolor:"#D82E2F"
                }
              }]} >Leave Group</Button>
                {loading? (
@@ -284,6 +301,10 @@ return (
      </Dialog>
                    
                   ):(<></> )} 
+      
+    </Stack>
+
+  
   
   
   </>

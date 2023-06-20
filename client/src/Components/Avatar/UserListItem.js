@@ -5,7 +5,7 @@ export default function UserListItem({user, handleFunction}) {
   return (
     <Box onClick={handleFunction} sx={[{bgcolor:"#E8E8E8",mt:"5px",mb:"5px",borderRadius:1 , p:"5px", display:"flex" , gap:"20px",cursor:"pointer"},{
         '&:hover':{
-            bgcolor:"#2827CC",
+            bgcolor:"#2C3E50",
             color:"white"
         }
     }]}>

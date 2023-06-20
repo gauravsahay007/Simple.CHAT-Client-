@@ -1,16 +1,16 @@
 import React from 'react'
-import { Alert } from '@mui/material'
+import {  Box } from '@mui/material'
 import Routers from "./Router"
-import ChatProvider from './main/chatProvider'
+import io from "socket.io-client"
+
 export default function App() {
+  
   return (
     <React.StrictMode>
-       
-        <Routers/> 
       
-     
-     
-      
+       <Routers/> 
+    
+
       </React.StrictMode>
     
   )

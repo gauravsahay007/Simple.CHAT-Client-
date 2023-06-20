@@ -91,7 +91,7 @@ export default function Signup() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'blue' }}>
+          <Avatar sx={{ m: 1, bgcolor: '#32465A' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -141,9 +141,9 @@ export default function Signup() {
               fullWidth
               variant="contained"
              
-              sx={[{ mt: 3, mb: 2, bgcolor:"blue" },{
+              sx={[{ mt: 3, mb: 2, bgcolor:"#32465A" },{
                 '&:hover':{
-                    bgcolor: "#2827CC"
+                    bgcolor: "#32465A"
                 }
               }]}
             onClick={handleSubmit}

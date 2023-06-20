@@ -4,9 +4,11 @@ import { ChatState } from '../../main/chatProvider';
 import { CreateGroup, SearchUsers } from '../Helper';
 import { isAuthenticated } from '../Auth/Helper/APIcalls';
 import UserListItem from '../Avatar/UserListItem';
+
 // ----------------------------------------------
 // Material UI
-import { Typography, Grid, Snackbar, CircularProgress, Stack, Alert, Box} from '@mui/material';
+import { Typography, Grid, Snackbar, CircularProgress, Stack, Alert, Box, SxProps} from '@mui/material';
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -17,11 +19,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import AddIcon from '@mui/icons-material/Add'; 
 import { blue } from '@mui/material/colors';
 import UserBadgeItem from '../Avatar/UserBadgeItem';
+
+
 // ------------------------------------------------
 
 
 
-export default function CreateGroupChat() {
+export default function CreateGroupChat({fetchAgain, setFetchAgain}) {
 // ----------------------------------------------
 // dialog box
   const [open, setOpen] = React.useState(false);
@@ -57,7 +61,6 @@ export default function CreateGroupChat() {
 
 // -------------------------------------------------------
 
-
 // -------------------------------------------------------
 // handle functions
 
@@ -92,10 +95,11 @@ const handleSubmit = () =>{
     }
     try{
         CreateGroup(user,selectedUsers,groupChatName).then((response,err)=>{
-            console.log(response);
+            // console.log(response);
+            setFetchAgain(!fetchAgain);
         })
     }
-    catch(err){
+    catch(err){ 
         console.log(err);
         return ;
     }
@@ -123,20 +127,35 @@ const handleDelete=(userToDelete)=>{
 }
 // -------------------------------------------------------
 
+const sx = {
+  "& .MuiDialog-container": {
+    alignItems: "flex-start"
+  }
+};
+
   return (
     <div>
-      <Button variant="outlined" sx={{color:"blue"}} onClick={handleClickOpen}>
-        Create Group <AddIcon sx={{ fontSize: 22, mb : "3px", ml : "5px", color:"blue" }}/>
+      <Button variant="filled" sx={[{color:"white", bgcolor:"#32465A",mt:"5px",mr:"5px"},{
+        "&:hover":{
+          bgcolor:"#32465F",
+          color:"white",
+          
+        }
+      
+      }]} onClick={handleClickOpen}>
+        Create Group <AddIcon sx={{ fontSize: 22, mb : "3px", ml : "5px", color:"white" }}/>
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title" >
-        <DialogTitle  sx={{fontSize: "30px" }}>
-        <Typography variant="h5" align="center">
+      <Dialog open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title"  sx={sx}
+      fullWidth
+    scroll="paper">
+        <DialogTitle   >
+        <Typography sx={{fontSize: "30px" }} variant="h5" align="center">
     Create Group Chat
 </Typography>
         </DialogTitle>
         <DialogContent>
          
-        <Grid item xs={12} sx={{mb:"10px" , mt: "10px"}}>
+        <Grid item xs={12} sx={{mb:"10px", mt:"5px" }}>
                 <TextField
                   required
                   fullWidth
@@ -164,9 +183,11 @@ const handleDelete=(userToDelete)=>{
                 </Box>
 
             <Stack direction="row" spacing={10}>  
-                <Button variant='filled'  sx={[{bgcolor:"blue", color:"white", mt:"5px"},{
+                <Button variant='filled'  sx={[{bgcolor:"#2C3E50", color:"white", mt:"5px"},{
                                 '&:hover':{
-                                    bgcolor: "#2827CC"
+                                    bgcolor: "white",
+                                    color:"#2C3E50",
+                                    border:"1px solid #2C3E50"
                                 }
                             }]
                         } onClick={handleSubmit}>Create Chat</Button>

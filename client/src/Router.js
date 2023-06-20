@@ -8,6 +8,7 @@ import Login from './Components/Auth/Login'
 import Mychats from './Components/Mychats'
 
 import Test from './test'
+import ChatPage from './Pages/ChatPage'
 // --------------------------------------------
 export default function Router() {
   
@@ -18,7 +19,7 @@ export default function Router() {
     <Routes>
         <Route path='/signup' exact element={<Signup/>} />
         <Route path='/login' exact element={<Login/>} />
-        <Route path='/chats' exact element={<Mychats/>} />
+        <Route path='/chats' exact element={<ChatPage/>} />
         <Route path='/test' exact element={<Test/>}/>
     </Routes>
     </ChatProvider>
