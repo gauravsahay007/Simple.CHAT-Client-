@@ -26,6 +26,7 @@ export default function Signup() {
     const [show, setShow] = useState(false);
     const [name , setName] = useState("");
     const [email, setEmail] = useState("");
+    const [image,setImage]=useState("");
     const [password, setPassword] = useState("");
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
@@ -38,8 +39,11 @@ export default function Signup() {
         else if(name==="email"){
             setEmail(event.target.value);
         }
-        else {
+        else if(name==="password"){
             setPassword(event.target.value)
+        }
+        else{
+            setImage(event.target.value)
         }
       }
 
