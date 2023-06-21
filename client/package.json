@@ -29,7 +29,7 @@
   "scripts": {
     "develop": "concurrently \"react-scripts start\" \" nodemon ./src/services/server.js\"",
     "start": "concurrently \"react-scripts start\" \" node ./src/services/server.js\"",
-    "build": "CI=false react-scripts build",
+    "build": "CI=false npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "seeds": "node ./src/services/seeds/index.js"
