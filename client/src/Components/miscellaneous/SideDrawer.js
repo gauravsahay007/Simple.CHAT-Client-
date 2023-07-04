@@ -14,17 +14,17 @@ import {
   Input,
   Avatar,
   CircularProgress,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Search, Notifications, ExpandMore } from "@material-ui/icons";
-import { ChatState } from "../../Context/chatProvider";
+} from "@mui/material";
+import { makeStyles } from "@mui/material";
+import { Search, Notifications, ExpandMore } from "@mui/icons-material";
+import { ChatState } from "../../main/chatProvider";
 import ProfileModal from "./ProfileModal";
 import { useHistory } from "react-router-dom";
 import { useDisclosure } from "@material-ui/core";
 import axios from "axios";
-import ChatLoading from "../ChatLoading";
+import ChatLoading from "../Chatloading";
 import UserListItem from "../UserAvatar/UserListItem";
-import { getOtherUser } from "../../config/ChatLogics";
+import { getOtherUser } from "../../configuration/ChatLogics";
 import NotificationBadge from "react-notification-badge";
 import { Effect } from "react-notification-badge";
 

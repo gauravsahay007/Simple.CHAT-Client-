@@ -6,13 +6,13 @@ import {
   Input,
   Modal,
   ModalBody,
-  ModalHeader,
+  Typography,
   ModalFooter,
   Spinner,
-} from "@material-ui/core";
+} from "@mui/material";
 import axios from "axios";
-import UserBadgeItem from "../UserAvatar/UserBadgeItem";
-import UserListItem from "../UserAvatar/UserListItem";
+import UserBadgeItem from "../Avatar/UserBadgeItem";
+import UserListItem from "../Avatar/UserListItem";
 
 const GroupChatModal = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -137,58 +137,59 @@ const GroupChatModal = ({ children }) => {
       <span onClick={handleOpen}>{children}</span>
 
       <Modal open={isOpen} onClose={handleClose}>
-        <ModalHeader
-          fontSize={"35px"}
-          fontFamily="QuickSand"
-          display={"flex"}
-          justifyContent="center"
-        >
-          Create Group Chat
-        </ModalHeader>
-        <ModalBody display={"flex"} flexDir="column" alignItems={"center"}>
-          <FormControl>
-            <Input
-              placeholder="Chat Name"
-              mb={3}
-              onChange={(e) => setGroupChatName(e.target.value)}
+      <Typography
+      variant="h4"
+      fontSize="35px"
+      fontFamily="QuickSand"
+      display="flex"
+      justifyContent="center"
+    >
+      Create Group Chat
+    </Typography>
+    <Box display="flex" flexDirection="column" alignItems="center">
+      <FormControl>
+        <Input
+          placeholder="Chat Name"
+          mb={3}
+          onChange={(e) => setGroupChatName(e.target.value)}
+        />
+      </FormControl>
+      <FormControl>
+        <Input
+          placeholder="Add Users"
+          mb={1}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+      </FormControl>
+      <Box width="100%" display="flex" flexWrap="wrap">
+        {selectedUsers.map((u) => (
+          <UserBadgeItem
+            key={u._id}
+            user={u}
+            handleFunction={() => handleDelete(u)}
+          />
+        ))}
+      </Box>
+      {loading ? (
+        <CircularProgress ml="auto" />
+      ) : (
+        searchResults
+          ?.slice(0, 4)
+          .map((user) => (
+            <UserListItem
+              key={user._id}
+              user={user}
+              handleFunction={() => handleGroup(user)}
             />
-          </FormControl>
-          <FormControl>
-            <Input
-              placeholder="Add Users"
-              mb={1}
-              onChange={(e) => handleSearch(e.target.value)}
-            />
-          </FormControl>
-          <Box w="100%" display="flex" flexWrap="wrap">
-            {selectedUsers.map((u) => (
-              <UserBadgeItem
-                key={u._id}
-                user={u}
-                handleFunction={() => handleDelete(u)}
-              />
-            ))}
-          </Box>
-          {loading ? (
-            <Spinner ml={"auto"} display="flex" />
-          ) : (
-            searchResults
-              ?.slice(0, 4)
-              .map((user) => (
-                <UserListItem
-                  key={user._id}
-                  user={user}
-                  handleFunction={() => handleGroup(user)}
-                />
-              ))
-          )}
-        </ModalBody>
+          ))
+      )}
+    </Box>
 
-        <ModalFooter>
-          <Button color="primary" onClick={handleSubmit}>
-            Create Chat
-          </Button>
-        </ModalFooter>
+    <Box display="flex" justifyContent="flex-end" mt={2}>
+      <Button variant="contained" color="primary" onClick={handleSubmit}>
+        Create Chat
+      </Button>
+    </Box>
       </Modal>
     </>
   );

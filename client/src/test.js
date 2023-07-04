@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileModal from "./Components/Modals/profile";
-import SideBar from "./Components/Modals/SideBar";
+import SideBar from "./Components/miscellaneous/SideDrawer";
 export default function Test(){
     
 

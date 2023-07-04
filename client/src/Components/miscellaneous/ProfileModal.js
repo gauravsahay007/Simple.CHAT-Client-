@@ -9,9 +9,9 @@ import {
   ModalFooter,
   ModalOverlay,
   Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import CloseIcon from "@material-ui/icons/Close";
+} from "@mui/material";
+import { makeStyles } from "@mui/material";
+
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -60,29 +60,35 @@ const ProfileModal = ({ user, children, size }) => {
       )}
 
       <Modal open={isOpen} onClose={handleClose} center>
-        <ModalOverlay />
-        <ModalBody className={classes.modalBody}>
-          <Avatar
-            className={classes.avatar}
-            alt={user.name}
-            src={user.pic}
-          />
-          <Typography
-            variant="h4"
-            className={classes.modalHeader}
-          >
-            {user.name}
-          </Typography>
-          <Typography variant="subtitle1">
-            Email: {user.email}
-          </Typography>
-        </ModalBody>
+        {/* <ModalOverlay /> */}
+        <Modal open={isOpen} onClose={handleClose}>
+  <Box className={classes.modalBody}>
+    <Avatar
+      className={classes.avatar}
+      alt={user.name}
+      src={user.pic}
+    />
+    <Typography
+      variant="h4"
+      className={classes.modalHeader}
+    >
+      {user.name}
+    </Typography>
+    <Typography variant="subtitle1">
+      Email: {user.email}
+    </Typography>
+  </Box>
+</Modal>
 
-        <ModalFooter>
-          <Button color="primary" onClick={handleClose}>
-            Close
-          </Button>
-        </ModalFooter>
+        <Modal>
+  <Grid container justify="flex-end">
+    <Grid item>
+      <Button color="primary" onClick={handleClose}>
+        Close
+      </Button>
+    </Grid>
+  </Grid>
+</Modal>
       </Modal>
     </>
   );
