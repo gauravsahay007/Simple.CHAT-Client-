@@ -57,7 +57,7 @@ const Homepage = () => {
             <TabPanel>
               <Login />
             </TabPanel>
-            <TabPanel>
+            <TabPanel> 
               <Signup />
             </TabPanel>
           </TabPanels>
