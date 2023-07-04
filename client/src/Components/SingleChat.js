@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { CloseIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -23,6 +24,26 @@ import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
 import { API } from "../API";
 const ENDPOINT = API;
+=======
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { ChatState } from '../main/chatProvider'
+import ProfileModal from './miscellaneous/ProfileModal'
+import UpdateGroupChatModal from './miscellaneous/UpdateGroupChatModal'
+import { API } from '../backend'
+import { FetchMessages, RemoveNotification, SendMessage } from './Helper'
+import { IconButton, Typography, Grid, TextField, Button , Box, Stack} from '@mui/material'
+import { getOtherUser } from '../configuration/logic' 
+import CloseIcon from '@mui/icons-material/Close';
+import { CircularProgress } from '@mui/material';
+import ScrollableChats from './ScrollableChats'
+import SendIcon from '@mui/icons-material/Send';
+import io from "socket.io-client"
+import { TrySharp } from '@mui/icons-material'
+import { GetUser } from './Helper'
+import { useRef } from 'react'
+
+>>>>>>> b2401a124fe0cbc90c5475fb7dbd256fe5d1e8ab
 var socket, selectedChatCompare, lastRoom;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
