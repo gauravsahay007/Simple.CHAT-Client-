@@ -1,55 +1,70 @@
-import React from 'react';
-import LOGO from '../logo.png';
-import { Box, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-export default function HomePage() {
+import React, { useEffect } from "react";
+import {
+  Container,
+  Box,
+  Text,
+  Tabs,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tab,
+} from "@chakra-ui/react";
+import Login from "../components/Authentication/Login";
+import Signup from "../components/Authentication/Signup";
+import { useNavigate } from "react-router-dom";
+
+const Homepage = () => {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("userInfo"));
-  
-  const onClick=()=>{
-    console.log(user);
-    if(user){
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (user) {
       navigate("/chats");
     }
-    else{
-      navigate("/login")
-    }
-  }
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        backgroundColor: '#33455B',
-        overflow: 'hidden',
-      }}
-    >
-      <img
-        style={{ border: '1px solid white', width: '60vw', height: 'auto' }}
-        src={LOGO}
-        alt="Logo"
-      />
+  }, [navigate]);
 
-      <Button
-        
-        variant="filled"
-        sx={{
-          bgcolor:"#00A884",
-          color: 'white',
-          mt: '10px',
-          mr: '5px',
-          '&:hover': {
-            bgcolor: '#00A884',
-            color: 'white'
-          },
-        }}
-        onClick={onClick}
+  return (
+    <Container maxW="xl" centerContent>
+      <Box
+        display="flex"
+        justifyContent="center"
+        p={3}
+        bg={"white"}
+        w="100%"
+        m="40px 0 15px 0"
+        borderRadius="lg"
+        borderWidth="1px"
       >
-        Get Started
-      </Button>
-    </Box>
+        <Text fontSize="4xl" fontFamily="QuickSand" color="black">
+          Chit-Chat Web App
+        </Text>
+      </Box>
+      <Box
+        bg="white"
+        w="100%"
+        p={4}
+        borderRadius="lg"
+        color="black"
+        borderWidth="1px"
+      >
+        <Tabs variant="soft-rounded">
+          <TabList>
+            <Tab width="50%">Log In</Tab>
+            <Tab width="50%">Sign up</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Login />
+            </TabPanel>
+            <TabPanel>
+              <Signup />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
+    </Container>
   );
-}
+};
+
+export default Homepage;
