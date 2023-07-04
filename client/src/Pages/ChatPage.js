@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { ChatState } from "../Context/chatProvider";
+import { ChatState } from "../main/chatProvider";
 import { Box } from "@mui/system";
 import { Drawer } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import SideDrawer from "../components/miscellaneous/SideDrawer";
-import MyChats from "../components/MyChats";
-import ChatBox from "../components/ChatBox";
+import SideDrawer from "../Components/miscellaneous/SideDrawer";
+import MyChats from "../Components/Mychats"
+import ChatBox from "../Components/ChatBox";
 
 const Chatpage = () => {
   const { user } = ChatState;

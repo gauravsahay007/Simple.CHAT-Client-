@@ -1,18 +1,18 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
-import CreateGroupChat from './Modals/CreateGroupChat'
+import CreateGroupChat from './miscellaneous/GroupChatModal'
 import {Avatar} from '@mui/material'
 import { ChatState } from '../main/chatProvider'
 import { FetchChats } from './Helper';
 import { getOtherUser } from '../configuration/logic';
-import ChatLoading from './chatloading'
+import ChatLoading from './Chatloading'
 // --------------------------------------------
 // MUI
 import { Box , Stack, Typography} from '@mui/material'
 
 // --------------------------------------------
 
-export default function Mychats({fetchAgain,setFetchAgain}) {
+export default function MyChats({fetchAgain,setFetchAgain}) {
   const {
     selectedChat,
     setSelectedChat,
