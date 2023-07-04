@@ -1,20 +1,21 @@
 import React from 'react';
-import LOGO from '../logo.png';
 import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import LOGO from '../logo.png';
+
 export default function HomePage() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("userInfo"));
-  
-  const onClick=()=>{
+  const user = JSON.parse(localStorage.getItem('userInfo'));
+
+  const onClick = () => {
     console.log(user);
-    if(user){
-      navigate("/chats");
+    if (user) {
+      navigate('/chats');
+    } else {
+      navigate('/login');
     }
-    else{
-      navigate("/login")
-    }
-  }
+  };
+
   return (
     <Box
       sx={{
@@ -24,7 +25,7 @@ export default function HomePage() {
         justifyContent: 'center',
         minHeight: '100vh',
         backgroundColor: '#33455B',
-        overflow: 'hidden',
+        overflow: 'hidden'
       }}
     >
       <img
@@ -34,17 +35,16 @@ export default function HomePage() {
       />
 
       <Button
-        
-        variant="filled"
+        variant="contained"
         sx={{
-          bgcolor:"#00A884",
+          bgcolor: '#00A884',
           color: 'white',
           mt: '10px',
           mr: '5px',
           '&:hover': {
             bgcolor: '#00A884',
             color: 'white'
-          },
+          }
         }}
         onClick={onClick}
       >
