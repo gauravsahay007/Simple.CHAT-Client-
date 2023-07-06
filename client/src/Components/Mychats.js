@@ -1,4 +1,7 @@
-import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Stack, Text, useToast,   Menu,
+  MenuButton,
+  MenuList,
+  MenuItem, } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../Context/chatProvider";
@@ -7,6 +10,8 @@ import ChatLoading from "./ChatLoading";
 import { getOtherUser } from "../config/ChatLogics";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { API } from "../API";
+import SideDrawer from "./miscellaneous/SideDrawer";
+import {HamburgerIcon} from "@chakra-ui/icons"
 const MyChats = ({ fetchAgain }) => {
   const {
     selectedChat,
@@ -59,38 +64,53 @@ const MyChats = ({ fetchAgain }) => {
       flexDir="column"
       alignItems={"center"}
       p={3}
-      bg="white"
+      bg="#3E103F"
       w={{ base: "100%", md: "31%" }}
-      borderRadius="lg"
+      borderRadius="sm"
       borderWidth={"1px"}
       h="100%"
     >
       <Box
         pb={3}
-        px={3}
+      
+        color={"white"}
         fontSize={{ base: "large", md: "2xl" }}
-        fontFamily="QuickSand"
+        
         display={"flex"}
         w="100%"
         justifyContent={"space-between"}
         alignItems="center"
       >
-        My Chats
-        <GroupChatModal>
-          <Button
-            display={"flex"}
-            fontSize={{ base: "12px", md: "10px", lg: "14px" }}
-            rightIcon={<AddIcon />}
-          >
-            New Group Chat
+        <SideDrawer/>
+        <Menu>
+        <MenuButton
+        >
+          <Button bgColor={"#3E103F"} color={"white"} fontSize={"22px"} >
+          <HamburgerIcon />
           </Button>
-        </GroupChatModal>
+        </MenuButton>
+        <MenuList>
+          <MenuItem>
+            <GroupChatModal>
+              <Button
+                display="flex"
+                fontSize={{ base: '12px', md: '12px', lg: '14px' }}
+                bgColor="#3E103F"
+                color={"white"}
+                style={{fontFamily:"Pacifico", fontSize:"20px"}} 
+              >
+                New Group
+              </Button>
+            </GroupChatModal>
+          </MenuItem>
+        </MenuList>
+      </Menu>
       </Box>
       <Box
         display={"flex"}
         flexDir="column"
-        p={3}
-        bg="#F8F8F8"
+        pt={3}
+        bg="#3E103F"
         w="100%"
         h="100%"
         borderRadius={"lg"}
@@ -102,11 +122,13 @@ const MyChats = ({ fetchAgain }) => {
               <Box
                 onClick={() => selectChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                color={selectedChat === chat ? "white" : "black"}
+                bg={selectedChat === chat ? "#944F9A":"#3E103F"}
+                color={selectedChat === chat ? "white" : "white"}
                 px={3}
                 py={2}
-                borderRadius={"lg"}
+                borderRadius={"sm"}
+               
+                border={"1px"}
                 key={chat._id}
               >
                 <Text fontWeight={"medium"}>
@@ -115,7 +137,7 @@ const MyChats = ({ fetchAgain }) => {
                     : chat.chatName}
                 </Text>
                 {chat.latestMessage ? (
-                  <Text color={selectedChat === chat ? "white" : "GrayText"}>
+                  <Text color={selectedChat === chat ? "white" : "white"}>
                     {!chat.isGroupChat
                       ? chat.latestMessage.content
                       : chat.latestMessage.sender._id === loggedUser._id

@@ -34,17 +34,17 @@ const ProfileModal = ({ user, children, size }) => {
             />
           }
           onClick={onOpen}
-          background="inherit"
+          background="#9A139A"
           borderRadius={"100%"}
+          mt={"10px"}
         />
       )}
 
-      <Modal size={"lg"} isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal size={"lg"} isOpen={isOpen} onClose={onClose} isCentered  background={"#9A139A"}  >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent  style={{fontFamily:"Pacifico", fontSize:"20px"}}  >
           <ModalHeader
             fontSize={"40"}
-            fontFamily="QuickSand"
             display={"flex"}
             justifyContent="center"
           >
@@ -66,14 +66,14 @@ const ProfileModal = ({ user, children, size }) => {
             />
             <Text
               fontSize={{ base: "28px", md: "30px" }}
-              fontFamily={"QuickSand"}
+             
             >
               Email: {user.email}
             </Text>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button bgColor={"#3E103F"} color={"white"} _hover={{color:"black", bgColor:"white", border:"1px solid black"}} mr={3} onClick={onClose}>
               Close
             </Button>
           </ModalFooter>
