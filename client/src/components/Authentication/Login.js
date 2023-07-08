@@ -83,7 +83,7 @@ const Login = () => {
   };
 
   return (
-    <VStack spacing="5px" color="black">
+    <VStack spacing="5px" color="white">
       <FormControl id="email" isRequired>
         <FormLabel>Email</FormLabel>
         <Input
@@ -110,7 +110,7 @@ const Login = () => {
       </FormControl>
 
       <Button
-        colorScheme={"blue"}
+        bgColor={"#4DD637"}
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
@@ -118,17 +118,7 @@ const Login = () => {
       >
         Login
       </Button>
-      <Button
-        variant={"solid"}
-        colorScheme={"red"}
-        width="100%"
-        onClick={() => {
-          setEmail("guest@example.com");
-          setPassword("123456");
-        }}
-      >
-        Get Guest User Credentials
-      </Button>
+
     </VStack>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { API } from "../../API";
@@ -12,10 +12,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
+
 import { ChatState } from "../../Context/chatProvider";
 
 const Signup = () => {
-
   const [show_1, setShow_1] = useState(false);
   const [show_2, setShow_2] = useState(false);
   const [name, setName] = useState("");
@@ -142,7 +142,7 @@ const Signup = () => {
   };
 
   return (
-    <VStack spacing="5px" color="black">
+    <VStack spacing="5px" color="white">
       <FormControl id="firstname" isRequired>
         <FormLabel>Name</FormLabel>
         <Input
@@ -190,6 +190,8 @@ const Signup = () => {
       <FormControl id="pic">
         <FormLabel>Upload your picture</FormLabel>
         <Input
+          // bgColor={"blue"}
+          
           type={"file"}
           p={1.5}
           accept="image/*"
@@ -198,13 +200,13 @@ const Signup = () => {
       </FormControl>
 
       <Button
-        colorScheme={"blue"}
+        bgColor={"#4DD637"}
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
         isLoading={loading}
       >
-        Signup
+        Register
       </Button>
     </VStack>
   );

@@ -25,33 +25,20 @@ const Homepage = () => {
   }, [navigate]);
 
   return (
-    <Container maxW="xl" centerContent>
+    <Container maxW="xl" centerContent paddingTop={"20px"}>
       <Box
-        display="flex"
-        justifyContent="center"
-        p={3}
-        bg="black"
-        w="100%"
-        m="40px 0 15px 0"
-        borderRadius="lg"
-        borderWidth="1px"
-      >
-        <Text fontSize="4xl" fontFamily="QuickSand" color="black">
-          Simple.CHAT
-        </Text>
-      </Box>
-      <Box
-        bg="black"
+        bg="#3E103F"
         w="100%"
         p={4}
+        color={"white"}
         borderRadius="lg"
-       
-        borderWidth="1px"
+        m={"auto"}
+        // borderWidth="1px"
       >
         <Tabs variant="soft-rounded">
           <TabList>
-            <Tab width="50%">Log In</Tab>
-            <Tab width="50%">Sign up</Tab>
+            <Tab width="50%" color={"white"}>Log In</Tab>
+            <Tab width="50%" color={"white"} >Sign up</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>

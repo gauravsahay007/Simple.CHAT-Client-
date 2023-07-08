@@ -1,12 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 .App {
   min-height: 100vh;
   display: flex;
-  background-image: url("../image3.jpg");
-
+  background-image: url("https://images.pexels.com/photos/6039245/pexels-photo-6039245.jpeg?auto=compress&cs=tinysrgb&h=850");
+  background-color: white;
   background-size: cover;
   background-position: center;
+  font-family: 'Pacifico', cursive;;
 }
 
 ::-webkit-scrollbar {
